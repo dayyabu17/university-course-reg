@@ -1,6 +1,27 @@
 const Course = require('../models/Course');
 const User = require('../models/User');
 
+// Get all available courses
+const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find().sort({ courseCode: 1 });
+
+    res.status(200).json({
+      status: 'success',
+      count: courses.length,
+      data: courses
+    });
+
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while fetching courses',
+      error: error.message
+    });
+  }
+};
+
 // Register courses for a student
 const registerCourses = async (req, res) => {
   try {
@@ -77,5 +98,6 @@ const registerCourses = async (req, res) => {
 };
 
 module.exports = {
+  getAllCourses,
   registerCourses
 };
