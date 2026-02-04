@@ -1,0 +1,81 @@
+const Course = require('../models/Course');
+const User = require('../models/User');
+
+// Register courses for a student
+const registerCourses = async (req, res) => {
+  try {
+    const { courseIds, userId } = req.body;
+
+    // Validate input
+    if (!courseIds || !Array.isArray(courseIds) || courseIds.length === 0) {
+      return res.status(400).json({ 
+        status: 'error',
+        message: 'Please provide an array of course IDs' 
+      });
+    }
+
+    if (!userId) {
+      return res.status(400).json({ 
+        status: 'error',
+        message: 'User ID is required' 
+      });
+    }
+
+    // Fetch the courses from the database
+    const courses = await Course.find({ _id: { $in: courseIds } });
+
+    // Check if all courses were found
+    if (courses.length !== courseIds.length) {
+      return res.status(404).json({ 
+        status: 'error',
+        message: 'One or more courses not found' 
+      });
+    }
+
+    // Calculate the total credit units
+    const totalCreditUnits = courses.reduce((sum, course) => sum + course.creditUnit, 0);
+
+    // Check if total exceeds 36 units
+    if (totalCreditUnits > 36) {
+      return res.status(400).json({ 
+        status: 'error',
+        message: 'Credit unit limit exceeded (Max: 36)',
+        totalCreditUnits
+      });
+    }
+
+    // Update the user's registeredCourses field
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { registeredCourses: courseIds },
+      { new: true, runValidators: true }
+    ).populate('registeredCourses');
+
+    if (!updatedUser) {
+      return res.status(404).json({ 
+        status: 'error',
+        message: 'User not found' 
+      });
+    }
+
+    // Return success response with updated user
+    res.status(200).json({
+      status: 'success',
+      message: 'Courses registered successfully',
+      totalCreditUnits,
+      user: updatedUser
+    });
+
+  } catch (error) {
+    console.error('Error registering courses:', error);
+    res.status(500).json({ 
+      status: 'error',
+      message: 'An error occurred while registering courses',
+      error: error.message 
+    });
+  }
+};
+
+module.exports = {
+  registerCourses
+};
