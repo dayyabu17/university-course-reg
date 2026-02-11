@@ -3,11 +3,8 @@ const User = require('../models/User');
 // Middleware to check if user is an admin
 const isAdmin = async (req, res, next) => {
   try {
-    const { userId } = req.body;
+    const userId = req.user?.id || req.body?.userId;
 
-    // If you're using JWT authentication, you would typically get userId from req.user
-    // For example: const userId = req.user.id;
-    
     if (!userId) {
       return res.status(401).json({
         status: 'error',
