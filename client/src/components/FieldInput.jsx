@@ -2,6 +2,7 @@ function FieldInput({
   icon,
   type,
   placeholder,
+  inputProps = {},
   value,
   onToggle,
   toggleLabel,
@@ -16,6 +17,7 @@ function FieldInput({
         placeholder={placeholder}
         type={type}
         required
+        {...inputProps}
       />
       {onToggle ? (
         <button
