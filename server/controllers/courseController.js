@@ -124,7 +124,53 @@ const registerCourses = async (req, res) => {
   }
 };
 
+// Get registered courses for the logged-in student
+const getRegisteredCourses = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'Authentication required'
+      });
+    }
+
+    const user = await User.findById(userId).populate('registeredCourses');
+
+    if (!user) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'User not found'
+      });
+    }
+
+    const registeredCourses = user.registeredCourses || [];
+    const totalCreditUnits = registeredCourses.reduce(
+      (sum, course) => sum + course.creditUnit,
+      0
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: registeredCourses.length
+        ? 'Registered courses retrieved successfully'
+        : 'No registered courses found',
+      totalCreditUnits,
+      courses: registeredCourses
+    });
+  } catch (error) {
+    console.error('Error fetching registered courses:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while fetching registered courses',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   getAllCourses,
-  registerCourses
+  registerCourses,
+  getRegisteredCourses
 };

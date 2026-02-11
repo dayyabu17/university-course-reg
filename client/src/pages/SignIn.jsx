@@ -10,6 +10,8 @@ import {
   MailIcon,
 } from '../constants/icons.jsx'
 import api from '../lib/api.js'
+import useRegistration from '../hooks/useRegistration.js'
+import useAuthSession from '../hooks/useAuthSession.js'
 
 function SignIn() {
   const heroImage =
@@ -19,6 +21,8 @@ function SignIn() {
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { refresh } = useRegistration()
+  const { setAuth } = useAuthSession()
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -35,10 +39,8 @@ function SignIn() {
         email: form.email,
         password: form.password,
       })
-      sessionStorage.setItem(
-        'auth',
-        JSON.stringify({ token: response.data.token, user: response.data.user })
-      )
+      setAuth({ token: response.data.token, user: response.data.user })
+      await refresh()
       navigate('/dashboard')
     } catch (error) {
       setStatus({

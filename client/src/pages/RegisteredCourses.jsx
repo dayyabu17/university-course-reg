@@ -1,18 +1,12 @@
-import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import CoursesTable from '../components/CoursesTable.jsx'
+import useRegistration from '../hooks/useRegistration.js'
+import useRegistrationMode from '../hooks/useRegistrationMode.js'
 
 function RegisteredCourses() {
   const navigate = useNavigate()
-  const stored = sessionStorage.getItem('registeredCourses')
-  const payload = stored ? JSON.parse(stored) : null
-  const courses = payload?.courses || []
-
-  const totalUnits = useMemo(() => {
-    if (payload?.totalUnits) {
-      return payload.totalUnits
-    }
-    return courses.reduce((sum, course) => sum + course.creditUnit, 0)
-  }, [courses, payload])
+  const { courses, totalUnits, loading, refresh } = useRegistration()
+  const { enableUpdateMode } = useRegistrationMode()
 
   return (
     <div className="page-bg min-h-screen w-full px-6 py-10 text-ink-900 md:px-12">
@@ -30,7 +24,9 @@ function RegisteredCourses() {
         </header>
 
         <section className="grid gap-6 rounded-[32px] bg-white/90 p-6 shadow-soft ring-1 ring-slate-200 md:p-8">
-          {courses.length === 0 ? (
+          {loading ? (
+            <div className="text-sm text-slate-500">Loading registration...</div>
+          ) : courses.length === 0 ? (
             <div className="flex flex-col items-start gap-3 text-sm text-slate-500">
               <p>No registered courses found yet.</p>
               <button
@@ -42,21 +38,15 @@ function RegisteredCourses() {
               </button>
             </div>
           ) : (
-            <div className="grid gap-4">
-              {courses.map((course) => (
-                <div
-                  key={course._id}
-                  className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm"
-                >
-                  <p className="text-sm font-semibold text-slate-800">
-                    {course.courseCode} - {course.courseName}
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    Semester {course.semester} • {course.creditUnit} units •
-                    Level {course.level}
-                  </p>
-                </div>
-              ))}
+            <div className="grid gap-6">
+              <CoursesTable
+                title="First semester"
+                courses={courses.filter((course) => course.semester === 1)}
+              />
+              <CoursesTable
+                title="Second semester"
+                courses={courses.filter((course) => course.semester === 2)}
+              />
             </div>
           )}
 
@@ -72,12 +62,21 @@ function RegisteredCourses() {
                 <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-800">
                   {totalUnits} units
                 </span>
-                <Link
+                <button
                   className="rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800"
-                  to="/dashboard"
+                  type="button"
+                  onClick={() => {
+                    const fetchAndNavigate = async () => {
+                      enableUpdateMode()
+                      await refresh()
+                      navigate('/dashboard')
+                    }
+
+                    fetchAndNavigate()
+                  }}
                 >
                   Update registration
-                </Link>
+                </button>
               </div>
             </div>
           ) : null}
