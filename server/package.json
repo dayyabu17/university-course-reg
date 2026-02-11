@@ -8,6 +8,8 @@
     "dev": "nodemon index.js",
     "seed": "node scripts/seedDatabase.js",
     "seed:users": "node scripts/seedUsers.js",
+    "test:admin": "node scripts/testAdminEndpoints.js",
+    "test:smoke": "node scripts/testSmokeEndpoints.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,14 +1,33 @@
+const mongoose = require('mongoose');
 const User = require('../models/User');
 
 // Middleware to check if user is an admin
 const isAdmin = async (req, res, next) => {
   try {
+    if (req.user?.role) {
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({
+          status: 'error',
+          message: 'Access denied. Admin privileges required.'
+        });
+      }
+
+      return next();
+    }
+
     const userId = req.user?.id || req.body?.userId;
 
     if (!userId) {
       return res.status(401).json({
         status: 'error',
         message: 'Authentication required'
+      });
+    }
+
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Invalid user ID'
       });
     }
 
