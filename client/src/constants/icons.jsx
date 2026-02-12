@@ -127,3 +127,16 @@ export function LogoutIcon({ className = 'h-5 w-5' }) {
     </svg>
   )
 }
+
+export function ArrowRightIcon({ className = 'h-5 w-5' }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M13.2 5.2 12 6.4l4.4 4.4H4v1.8h12.4L12 17l1.2 1.2L20 12z" />
+    </svg>
+  )
+}
