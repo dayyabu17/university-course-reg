@@ -119,6 +119,11 @@ Start the React development server:
 npm run dev
 ```
 
+Create a `.env` file in `client/` or copy from `.env.example`:
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
 🚀 **The app should now be running at** `http://localhost:5173`
 
 ---
@@ -146,7 +151,7 @@ npm run dev
 
 ## 🔌 API Overview
 
-Base URL: `http://localhost:5000/api`
+Base URL: `http://localhost:5000/api` (configurable via `VITE_API_BASE_URL`)
 
 ### Auth
 
