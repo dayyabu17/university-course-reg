@@ -15,11 +15,9 @@ function useRegistrationRows({
 }) {
   const [rowsBySemester, setRowsBySemester] = useState(createEmptyRows)
 
-  useEffect(() => {
-    if (!isUpdateMode) {
-      setRowsBySemester(createEmptyRows())
-    }
-  }, [courses, isUpdateMode])
+  const resetRows = () => {
+    setRowsBySemester(createEmptyRows())
+  }
 
   useEffect(() => {
     const hydrateUpdateRows = async () => {
@@ -123,6 +121,7 @@ function useRegistrationRows({
     rowsBySemester,
     totalUnits,
     selectedCourseIds,
+    resetRows,
     handleRowChange,
     handleAddRow,
     handleRemoveRow,
