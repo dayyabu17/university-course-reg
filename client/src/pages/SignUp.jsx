@@ -137,8 +137,6 @@ function SignUp() {
             </select>
           </div>
 
-          <FieldInput icon={<MailIcon />} placeholder="Email address" type="email" />
-
           <FieldInput
             icon={<LockIcon />}
             placeholder="Password"
