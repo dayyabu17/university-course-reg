@@ -188,6 +188,7 @@ describe('Admin Dashboard Components', () => {
           semester: 1,
           creditUnit: 2,
           level: '100',
+          capacity: 50,
         })
       })
     })
