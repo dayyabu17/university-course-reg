@@ -100,6 +100,57 @@ function StudentDashboard() {
       return
     }
 
+    // Get selected courses
+    const selectedCourses = courses.filter((course) =>
+      selectedCourseIds.includes(course._id)
+    )
+
+    // Check if any courses are full
+    const fullCourses = selectedCourses.filter((course) => course.isFull)
+    if (fullCourses.length > 0) {
+      const fullCourseNames = fullCourses
+        .map((c) => c.courseCode)
+        .join(', ')
+      setRegisterStatus({
+        type: 'error',
+        message: `Cannot register: ${fullCourseNames} ${fullCourses.length === 1 ? 'is' : 'are'} full`,
+      })
+      return
+    }
+
+    // Validate prerequisites
+    const registeredCourseCodes = registeredCourses.map((c) => c.courseCode)
+    const prerequisiteErrors = []
+
+    for (const course of selectedCourses) {
+      if (course.prerequisites && course.prerequisites.length > 0) {
+        const missingPrereqs = course.prerequisites.filter(
+          (prereq) => !registeredCourseCodes.includes(prereq)
+        )
+        if (missingPrereqs.length > 0) {
+          prerequisiteErrors.push({
+            courseCode: course.courseCode,
+            courseName: course.courseName,
+            missing: missingPrereqs,
+          })
+        }
+      }
+    }
+
+    if (prerequisiteErrors.length > 0) {
+      const errorMessage = prerequisiteErrors
+        .map(
+          (err) =>
+            `${err.courseCode}: Missing ${err.missing.join(', ')}`
+        )
+        .join('; ')
+      setRegisterStatus({
+        type: 'error',
+        message: `Prerequisites not met: ${errorMessage}`,
+      })
+      return
+    }
+
     setRegisterLoading(true)
     setRegisterStatus(null)
     try {
