@@ -6,6 +6,7 @@ const {
 	createCourse,
 } = require('../controllers/adminController');
 const { protect, isAdmin } = require('../middleware/authMiddleware');
+const { validateCourseCreation } = require('../middleware/validation');
 
 const router = express.Router();
 
@@ -19,6 +20,6 @@ router.get('/stats', protect, isAdmin, getAdminStats);
 router.get('/courses', protect, isAdmin, getAllCoursesAdmin);
 
 // POST /courses - Create a course (protected - admin only)
-router.post('/courses', protect, isAdmin, createCourse);
+router.post('/courses', protect, isAdmin, validateCourseCreation, createCourse);
 
 module.exports = router;
