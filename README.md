@@ -14,7 +14,8 @@
     <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB" alt="Express.js" />
     <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
     <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/license-ISC-blue?style=for-the-badge" alt="License" />
+    <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License" />
+    <img src="https://github.com/your-username/university-course-registration/workflows/CI/badge.svg" alt="CI Status" />
   </p>
 
   <br />
@@ -173,6 +174,50 @@ Base URL: `http://localhost:5000/api` (configurable via `VITE_API_BASE_URL`)
 
 ---
 
+## 👥 Team Roles
+
+This project follows a collaborative open-source development model with the following roles:
+
+- **Project Lead**: Oversees project direction, roadmap, and major decisions
+- **Repository Manager**: Manages repository settings, branch protection, and access control
+- **Maintainers**: Review and merge pull requests, manage releases, and guide contributors
+- **Code Reviewers**: Review code submissions for quality, style, and correctness
+- **Contributors**: Submit bug fixes, features, and improvements via pull requests
+
+All contributors are expected to follow our [Code of Conduct](CONTRIBUTING.md#code-of-conduct) and [Contributing Guidelines](CONTRIBUTING.md).
+
+---
+
+## 🧪 Testing
+
+### Running Tests Locally
+
+**Server Tests:**
+```bash
+cd server
+npm test                 # Run all tests
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Generate coverage report
+```
+
+**Client Tests:**
+```bash
+cd client
+npm test                 # Run all tests
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Generate coverage report
+```
+
+### Test Coverage
+
+The project maintains the following coverage thresholds:
+- Server: 60% coverage (lines, functions, branches, statements)
+- Client: 50% coverage (lines, functions, branches, statements)
+
+Coverage reports are generated in the `coverage/` directory after running tests with the `--coverage` flag.
+
+---
+
 ## 🧪 Scripts
 
 From `server/package.json`:
@@ -209,6 +254,50 @@ From `server/package.json`:
 
 ---
 
+## 🤝 Contributing
+
+We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
+
+### Quick Start for Contributors
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes and add tests
+4. Run tests and linting locally
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+- Development setup
+- Coding standards
+- Testing requirements
+- Pull request process
+- Code review expectations
+
+---
+
 ## 📄 License
 
-ISC (see `server/package.json`).
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+---
+
+## 📧 Contact
+
+For questions, issues, or suggestions, please:
+- Open an issue on GitHub
+- Check existing issues and discussions
+- Follow our contribution guidelines
+
+---
+
+<div align="center">
+  <p>Made with ❤️ by the University Course Registration System team</p>
+  <p>
+    <a href="CONTRIBUTING.md">Contributing</a> •
+    <a href="LICENSE.md">License</a> •
+    <a href="https://github.com/your-username/university-course-registration/issues">Issues</a>
+  </p>
+</div>
+
