@@ -20,5 +20,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.js'],
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.js'],
   testTimeout: 10000,
-  verbose: true
+  verbose: true,
+  forceExit: true,
+  detectOpenHandles: true
 };

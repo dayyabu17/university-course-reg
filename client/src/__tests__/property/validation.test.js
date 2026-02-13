@@ -110,16 +110,21 @@ describe('Property 2: Input Validation Consistency', () => {
           (signupData) => {
             const result = validateSignupData(signupData)
             
-            // If all fields are present, not empty, and not just whitespace, validation should pass
-            if (signupData.name && signupData.name.trim() !== '' && 
-                signupData.regNo && signupData.regNo.trim() !== '' && 
-                signupData.email && 
-                signupData.password && signupData.password.trim() !== '' && 
-                signupData.level) {
+            // Check if all required fields are valid (present, not empty, not whitespace-only)
+            const isNameValid = signupData.name && signupData.name.trim() !== ''
+            const isRegNoValid = signupData.regNo && signupData.regNo.trim() !== ''
+            const isEmailValid = signupData.email && signupData.email.trim() !== ''
+            const isPasswordValid = signupData.password && signupData.password.trim() !== ''
+            const isLevelValid = !!signupData.level
+            
+            const allFieldsValid = isNameValid && isRegNoValid && isEmailValid && isPasswordValid && isLevelValid
+            
+            // If all fields are valid, validation should pass
+            if (allFieldsValid) {
               return result.valid === true
             }
             
-            // If any field is missing or whitespace-only, validation should fail
+            // If any field is invalid, validation should fail
             return result.valid === false && result.errors.length > 0
           }
         ),
