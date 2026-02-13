@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuthSession from '../hooks/useAuthSession.js'
-import FieldInput from '../components/FieldInput.jsx'
 import PrimaryButton from '../components/PrimaryButton.jsx'
 import api from '../lib/api.js'
 
@@ -148,22 +147,33 @@ function Profile() {
             </div>
 
             <form onSubmit={handleUpdateProfile} className="grid gap-4">
-              <FieldInput
-                label="Full Name"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <FieldInput
-                label="Email Address"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Full Name
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm focus:border-accent-400 focus:outline-none focus:ring-4 focus:ring-accent-100"
+                />
+              </div>
+              
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Email Address
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm focus:border-accent-400 focus:outline-none focus:ring-4 focus:ring-accent-100"
+                />
+              </div>
 
               {status && (
                 <div
@@ -187,30 +197,47 @@ function Profile() {
             <h2 className="mb-6 text-xl font-semibold text-slate-900">Change Password</h2>
             
             <form onSubmit={handleChangePassword} className="grid gap-4">
-              <FieldInput
-                label="Current Password"
-                name="currentPassword"
-                type="password"
-                value={passwordData.currentPassword}
-                onChange={handlePasswordChange}
-                required
-              />
-              <FieldInput
-                label="New Password"
-                name="newPassword"
-                type="password"
-                value={passwordData.newPassword}
-                onChange={handlePasswordChange}
-                required
-              />
-              <FieldInput
-                label="Confirm New Password"
-                name="confirmPassword"
-                type="password"
-                value={passwordData.confirmPassword}
-                onChange={handlePasswordChange}
-                required
-              />
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Current Password
+                </label>
+                <input
+                  name="currentPassword"
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={handlePasswordChange}
+                  required
+                  className="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm focus:border-accent-400 focus:outline-none focus:ring-4 focus:ring-accent-100"
+                />
+              </div>
+              
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  New Password
+                </label>
+                <input
+                  name="newPassword"
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={handlePasswordChange}
+                  required
+                  className="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm focus:border-accent-400 focus:outline-none focus:ring-4 focus:ring-accent-100"
+                />
+              </div>
+              
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Confirm New Password
+                </label>
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  value={passwordData.confirmPassword}
+                  onChange={handlePasswordChange}
+                  required
+                  className="w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm focus:border-accent-400 focus:outline-none focus:ring-4 focus:ring-accent-100"
+                />
+              </div>
 
               {passwordStatus && (
                 <div
