@@ -110,13 +110,16 @@ describe('Property 2: Input Validation Consistency', () => {
           (signupData) => {
             const result = validateSignupData(signupData)
             
-            // If all fields are present and valid, validation should pass
-            if (signupData.name && signupData.regNo && signupData.email && 
-                signupData.password && signupData.level) {
+            // If all fields are present, not empty, and not just whitespace, validation should pass
+            if (signupData.name && signupData.name.trim() !== '' && 
+                signupData.regNo && signupData.regNo.trim() !== '' && 
+                signupData.email && 
+                signupData.password && signupData.password.trim() !== '' && 
+                signupData.level) {
               return result.valid === true
             }
             
-            // If any field is missing, validation should fail
+            // If any field is missing or whitespace-only, validation should fail
             return result.valid === false && result.errors.length > 0
           }
         ),
@@ -206,12 +209,12 @@ describe('Property 2: Input Validation Consistency', () => {
           (loginData) => {
             const result = validateLoginData(loginData)
             
-            // If both fields are present and valid, validation should pass
-            if (loginData.email && loginData.password) {
+            // If both fields are present, not empty, and password is not just whitespace, validation should pass
+            if (loginData.email && loginData.password && loginData.password.trim() !== '') {
               return result.valid === true
             }
             
-            // If any field is missing, validation should fail
+            // If any field is missing or password is whitespace-only, validation should fail
             return result.valid === false && result.errors.length > 0
           }
         ),
@@ -236,12 +239,12 @@ describe('Property 2: Input Validation Consistency', () => {
             
             const result = validateCourseData(courseData)
             
-            // If courseCode is present, validation should pass
-            if (courseCode) {
+            // If courseCode is present and not just whitespace, validation should pass
+            if (courseCode && courseCode.trim() !== '') {
               return result.valid === true
             }
             
-            // If courseCode is missing, validation should fail
+            // If courseCode is missing or whitespace-only, validation should fail
             return result.valid === false && result.errors.some(e => e.includes('Course code'))
           }
         ),
