@@ -158,8 +158,8 @@ jobs:
       - name: Check build status
         run: |
           if [ "${{ needs.server-tests.result }}" != "success" ] || [ "${{ needs.client-tests.result }}" != "success" ]; then
-            echo "❌ Build failed"
+            echo "Build failed"
             exit 1
           else
-            echo "✅ Build passed"
+            echo "Build passed"
           fi

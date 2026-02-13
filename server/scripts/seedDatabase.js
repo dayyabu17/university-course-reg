@@ -63,7 +63,7 @@ const seedDatabase = async () => {
 
     // Insert sample courses
     const result = await Course.insertMany(sampleCourses);
-    console.log(`\n✓ Successfully seeded ${result.length} courses into the database`);
+    console.log(`\nSuccessfully seeded ${result.length} courses into the database`);
     console.log(`  - Semester 1: 20 courses`);
     console.log(`  - Semester 2: 20 courses`);
     console.log(`  - Levels: 100, 200, 300, 400`);

@@ -28,26 +28,26 @@
 
 <br />
 
-## 📖 Project Overview
+## Project Overview
 
 **University Course Registration System** is a full-stack solution for managing student registration, course catalogs, and administrative oversight. It provides a clean experience for students to browse courses by level, register within credit limits, and view their registered courses, while giving admins tools to manage courses and monitor activity.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | Feature | Description |
 | :--- | :--- |
-| **🔐 Role-Based Access** | Secure authentication for Students and Admins using JWT. |
-| **📚 Course Catalog** | Browse courses by level, with optional carry-over inclusion. |
-| **✅ Registration Workflow** | Register courses with validation and a 36-unit max limit. |
-| **📄 Registered Courses View** | Clear summary tables for enrolled courses. |
-| **📊 Admin Dashboard** | Overview stats and management tools for courses and users. |
-| **🎨 Modern UI/UX** | Responsive interface built with Tailwind CSS. |
+| **Role-Based Access** | Secure authentication for Students and Admins using JWT. |
+| **Course Catalog** | Browse courses by level, with optional carry-over inclusion. |
+| **Registration Workflow** | Register courses with validation and a 36-unit max limit. |
+| **Registered Courses View** | Clear summary tables for enrolled courses. |
+| **Admin Dashboard** | Overview stats and management tools for courses and users. |
+| **Modern UI/UX** | Responsive interface built with Tailwind CSS. |
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 <div align="center">
 
@@ -67,7 +67,7 @@
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Follow these instructions to set up the project locally.
 
@@ -149,13 +149,13 @@ cd client
 npm run dev
 ```
 
-🚀 **The app should now be running at:**
+**The app should now be running at:**
 - Frontend: `http://localhost:5173`
 - Backend API: `http://localhost:5000/api`
 
 ---
 
-## 🔄 Git Workflow & Collaboration
+## Git Workflow & Collaboration
 
 This project follows standard open-source development practices using Git and GitHub.
 
@@ -230,7 +230,7 @@ git commit -m "docs(readme): update installation instructions"
 
 ---
 
-## 🔧 CI/CD Pipeline
+## CI/CD Pipeline
 
 This project uses GitHub Actions for continuous integration and deployment.
 
@@ -258,7 +258,7 @@ The CI/CD pipeline is defined in `.github/workflows/ci.yml`
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```bash
 /
@@ -279,7 +279,7 @@ The CI/CD pipeline is defined in `.github/workflows/ci.yml`
 
 ---
 
-## 🔌 API Overview
+## API Overview
 
 Base URL: `http://localhost:5000/api` (configurable via `VITE_API_BASE_URL`)
 
@@ -303,7 +303,7 @@ Base URL: `http://localhost:5000/api` (configurable via `VITE_API_BASE_URL`)
 
 ---
 
-## 👥 Team Roles & Governance
+## Team Roles & Governance
 
 This project follows an open-source collaborative development model as per the course assignment requirements. Team members are organized according to the following governance structure:
 
@@ -338,7 +338,7 @@ This project follows an open-source collaborative development model as per the c
 
 ---
 
-## 🐛 Issue Tracking
+## Issue Tracking
 
 We use GitHub Issues to track bugs, feature requests, and tasks. Each group must create a minimum of 5 issues.
 
@@ -367,7 +367,7 @@ See [SAMPLE_ISSUES.md](SAMPLE_ISSUES.md) for examples of well-written issues.
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Running Tests Locally
 
@@ -397,7 +397,7 @@ Coverage reports are generated in the `coverage/` directory after running tests 
 
 ---
 
-## 🧪 Scripts
+## Scripts
 
 From `server/package.json`:
 
@@ -426,14 +426,14 @@ From `server/package.json`:
 
 ---
 
-## 📝 Notes
+## Notes
 
 - Course registration enforces a 36-unit maximum on the server.
 - Client session data is stored in `sessionStorage` using keys from `client/src/constants/storageKeys.js`.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTING.md) to get started.
 
@@ -456,13 +456,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ---
 
-## 📧 Contact
+## Contact
 
 For questions, issues, or suggestions, please:
 - Open an issue on GitHub
@@ -472,7 +472,7 @@ For questions, issues, or suggestions, please:
 ---
 
 <div align="center">
-  <p>Made with ❤️ by the University Course Registration System team</p>
+  <p>Made with care by the University Course Registration System team</p>
   <p>
     <a href="CONTRIBUTING.md">Contributing</a> •
     <a href="LICENSE.md">License</a> •
