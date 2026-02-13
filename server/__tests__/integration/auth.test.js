@@ -90,7 +90,7 @@ describe('Authentication Endpoints', () => {
 
       expect(response.status).toBe(400);
       expect(response.body.status).toBe('error');
-      expect(response.body.message).toContain('required fields');
+      expect(response.body.message).toContain('Name is required');
     });
 
     it('should return 400 when regNo is missing', async () => {
@@ -183,7 +183,7 @@ describe('Authentication Endpoints', () => {
         .send(duplicateUser);
 
       expect(response.status).toBe(400);
-      expect(response.body.status).toBe('error');
+      expect(response.body.error).toBe('Validation Error');
       expect(response.body.message).toContain('Email already registered');
     });
 

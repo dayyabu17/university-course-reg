@@ -50,8 +50,6 @@ const sampleCourses = [
   { courseCode: 'CSC4204', courseName: 'Advanced Cybersecurity', semester: 2, creditUnit: 2, level: '400', prerequisites: ['CSC4104'], capacity: 25, enrolledCount: 0 },
   { courseCode: 'CSC4205', courseName: 'Project and Seminar', semester: 2, creditUnit: 2, level: '400', prerequisites: [], capacity: 40, enrolledCount: 0 }
 ];
-  { courseCode: 'CSC4205', courseName: 'Project and Seminar', semester: 2, creditUnit: 2, level: '400', prerequisites: [] }
-];
 
 const seedDatabase = async () => {
   try {
