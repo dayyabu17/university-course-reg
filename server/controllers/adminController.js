@@ -19,9 +19,8 @@ const getAllStudentSlips = async (req, res) => {
   } catch (error) {
     console.error('Error fetching student slips:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred while fetching student slips',
-      error: error.message
+      error: 'Internal Server Error',
+      message: 'An error occurred while fetching student slips'
     });
   }
 };
@@ -44,9 +43,8 @@ const getAdminStats = async (req, res) => {
   } catch (error) {
     console.error('Error fetching admin stats:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred while fetching admin stats',
-      error: error.message,
+      error: 'Internal Server Error',
+      message: 'An error occurred while fetching admin stats'
     });
   }
 };
@@ -64,9 +62,8 @@ const getAllCoursesAdmin = async (req, res) => {
   } catch (error) {
     console.error('Error fetching courses for admin:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred while fetching courses',
-      error: error.message,
+      error: 'Internal Server Error',
+      message: 'An error occurred while fetching courses'
     });
   }
 };
@@ -78,7 +75,7 @@ const createCourse = async (req, res) => {
 
     if (!courseCode || !courseName || !semester || !creditUnit || !level) {
       return res.status(400).json({
-        status: 'error',
+        error: 'Validation Error',
         message:
           'Please provide courseCode, courseName, semester, creditUnit, and level',
       });
@@ -90,7 +87,7 @@ const createCourse = async (req, res) => {
 
     if (existingCourse) {
       return res.status(400).json({
-        status: 'error',
+        error: 'Validation Error',
         message: 'Course code already exists',
       });
     }
@@ -111,9 +108,8 @@ const createCourse = async (req, res) => {
   } catch (error) {
     console.error('Error creating course:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred while creating course',
-      error: error.message,
+      error: 'Internal Server Error',
+      message: 'An error occurred while creating course'
     });
   }
 };

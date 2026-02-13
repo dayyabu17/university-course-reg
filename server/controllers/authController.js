@@ -10,7 +10,7 @@ const signUp = async (req, res) => {
     // Validate input
     if (!name || !regNo || !email || !password || !level) {
       return res.status(400).json({
-        status: 'error',
+        error: 'Validation Error',
         message: 'Please provide all required fields: name, regNo, email, password, and level'
       });
     }
@@ -19,7 +19,7 @@ const signUp = async (req, res) => {
     const existingUser = await User.findOne({ $or: [{ email }, { regNo }] });
     if (existingUser) {
       return res.status(400).json({
-        status: 'error',
+        error: 'Validation Error',
         message: existingUser.email === email 
           ? 'Email already registered' 
           : 'Registration number already exists'
@@ -64,9 +64,8 @@ const signUp = async (req, res) => {
   } catch (error) {
     console.error('Sign up error:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred during registration',
-      error: error.message
+      error: 'Internal Server Error',
+      message: 'An error occurred during registration'
     });
   }
 };
@@ -79,7 +78,7 @@ const signIn = async (req, res) => {
     // Validate input
     if (!email || !password) {
       return res.status(400).json({
-        status: 'error',
+        error: 'Validation Error',
         message: 'Please provide email and password'
       });
     }
@@ -88,7 +87,7 @@ const signIn = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
-        status: 'error',
+        error: 'Unauthorized',
         message: 'Invalid email or password'
       });
     }
@@ -97,7 +96,7 @@ const signIn = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({
-        status: 'error',
+        error: 'Unauthorized',
         message: 'Invalid email or password'
       });
     }
@@ -127,9 +126,8 @@ const signIn = async (req, res) => {
   } catch (error) {
     console.error('Sign in error:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred during login',
-      error: error.message
+      error: 'Internal Server Error',
+      message: 'An error occurred during login'
     });
   }
 };

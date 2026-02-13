@@ -9,7 +9,7 @@ const getAllCourses = async (req, res) => {
     // Validate that level is provided
     if (!level) {
       return res.status(400).json({
-        status: 'error',
+        error: 'Validation Error',
         message: 'Level is required. Please provide your current level.'
       });
     }
@@ -42,9 +42,8 @@ const getAllCourses = async (req, res) => {
   } catch (error) {
     console.error('Error fetching courses:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred while fetching courses',
-      error: error.message
+      error: 'Internal Server Error',
+      message: 'An error occurred while fetching courses'
     });
   }
 };
@@ -57,14 +56,14 @@ const registerCourses = async (req, res) => {
     // Validate input
     if (!courseIds || !Array.isArray(courseIds) || courseIds.length === 0) {
       return res.status(400).json({ 
-        status: 'error',
+        error: 'Validation Error',
         message: 'Please provide an array of course IDs' 
       });
     }
 
     if (!userId) {
       return res.status(400).json({ 
-        status: 'error',
+        error: 'Validation Error',
         message: 'User ID is required' 
       });
     }
@@ -75,7 +74,7 @@ const registerCourses = async (req, res) => {
     // Check if all courses were found
     if (courses.length !== courseIds.length) {
       return res.status(404).json({ 
-        status: 'error',
+        error: 'Not Found',
         message: 'One or more courses not found' 
       });
     }
@@ -86,7 +85,7 @@ const registerCourses = async (req, res) => {
     // Check if total exceeds 36 units
     if (totalCreditUnits > 36) {
       return res.status(400).json({ 
-        status: 'error',
+        error: 'Validation Error',
         message: 'Credit unit limit exceeded (Max: 36)',
         totalCreditUnits
       });
@@ -101,7 +100,7 @@ const registerCourses = async (req, res) => {
 
     if (!updatedUser) {
       return res.status(404).json({ 
-        status: 'error',
+        error: 'Not Found',
         message: 'User not found' 
       });
     }
@@ -117,9 +116,8 @@ const registerCourses = async (req, res) => {
   } catch (error) {
     console.error('Error registering courses:', error);
     res.status(500).json({ 
-      status: 'error',
-      message: 'An error occurred while registering courses',
-      error: error.message 
+      error: 'Internal Server Error',
+      message: 'An error occurred while registering courses'
     });
   }
 };
@@ -131,7 +129,7 @@ const getRegisteredCourses = async (req, res) => {
 
     if (!userId) {
       return res.status(401).json({
-        status: 'error',
+        error: 'Unauthorized',
         message: 'Authentication required'
       });
     }
@@ -140,7 +138,7 @@ const getRegisteredCourses = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        status: 'error',
+        error: 'Not Found',
         message: 'User not found'
       });
     }
@@ -162,9 +160,8 @@ const getRegisteredCourses = async (req, res) => {
   } catch (error) {
     console.error('Error fetching registered courses:', error);
     res.status(500).json({
-      status: 'error',
-      message: 'An error occurred while fetching registered courses',
-      error: error.message
+      error: 'Internal Server Error',
+      message: 'An error occurred while fetching registered courses'
     });
   }
 };
