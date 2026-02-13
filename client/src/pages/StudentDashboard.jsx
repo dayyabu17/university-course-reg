@@ -33,6 +33,17 @@ function StudentDashboard() {
     status: coursesStatus,
   } = useCourseCatalog()
 
+  // Filter out already registered courses from available courses
+  const availableCourses = useMemo(() => {
+    if (isUpdateMode) {
+      // In update mode, show all courses including registered ones
+      return courses
+    }
+    // Filter out courses that are already registered
+    const registeredCourseIds = new Set(registeredCourses.map((c) => c._id))
+    return courses.filter((course) => !registeredCourseIds.has(course._id))
+  }, [courses, registeredCourses, isUpdateMode])
+
   const {
     rowsBySemester,
     totalUnits,
@@ -42,7 +53,7 @@ function StudentDashboard() {
     handleAddRow,
     handleRemoveRow,
   } = useRegistrationRows({
-    courses,
+    courses: availableCourses,
     isUpdateMode,
     registrationSummary,
     registeredCourses,
@@ -101,7 +112,7 @@ function StudentDashboard() {
     }
 
     // Get selected courses
-    const selectedCourses = courses.filter((course) =>
+    const selectedCourses = availableCourses.filter((course) =>
       selectedCourseIds.includes(course._id)
     )
 
@@ -199,13 +210,22 @@ function StudentDashboard() {
               Select your level, review courses, and submit your registration.
             </p>
           </div>
-          <button
-            className="w-full rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-100 md:w-auto"
-            type="button"
-            onClick={handleSignOut}
-          >
-            Sign out
-          </button>
+          <div className="flex gap-3">
+            <button
+              className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-100"
+              type="button"
+              onClick={() => navigate('/profile')}
+            >
+              Profile
+            </button>
+            <button
+              className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-100"
+              type="button"
+              onClick={handleSignOut}
+            >
+              Sign out
+            </button>
+          </div>
         </header>
 
         {!isUpdateMode && hasRegistration ? (
@@ -230,7 +250,7 @@ function StudentDashboard() {
                 <SemesterCourseTable
                   key={semester}
                   semester={semester}
-                  courses={courses}
+                  courses={availableCourses}
                   rows={rowsBySemester[semester]}
                   loading={coursesLoading}
                   onAddRow={handleAddRow}
