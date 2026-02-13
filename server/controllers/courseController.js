@@ -1,6 +1,24 @@
 const Course = require('../models/Course');
 const User = require('../models/User');
 
+// Helper function to validate prerequisites
+const validatePrerequisites = (student, course) => {
+  // Get the course codes of all registered courses
+  const registeredCourseCodes = student.registeredCourses.map(c => 
+    typeof c === 'object' ? c.courseCode : c
+  );
+  
+  // Find missing prerequisites
+  const missingPrereqs = course.prerequisites.filter(
+    prereq => !registeredCourseCodes.includes(prereq)
+  );
+  
+  return {
+    valid: missingPrereqs.length === 0,
+    missing: missingPrereqs
+  };
+};
+
 // Get all available courses
 const getAllCourses = async (req, res, next) => {
   try {
@@ -9,6 +27,8 @@ const getAllCourses = async (req, res, next) => {
     // Validate that level is provided
     if (!level) {
       return res.status(400).json({
+        success: false,
+        status: 'error',
         error: 'Validation Error',
         message: 'Level is required. Please provide your current level.'
       });
@@ -50,14 +70,77 @@ const registerCourses = async (req, res, next) => {
   try {
     const { courseIds, userId } = req.body;
 
+    // Fetch the user with their registered courses
+    const user = await User.findById(userId).populate('registeredCourses');
+    
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        status: 'error',
+        error: 'Not Found',
+        message: 'User not found' 
+      });
+    }
+
     // Fetch the courses from the database
     const courses = await Course.find({ _id: { $in: courseIds } });
 
     // Check if all courses were found
     if (courses.length !== courseIds.length) {
       return res.status(404).json({ 
+        success: false,
+        status: 'error',
         error: 'Not Found',
         message: 'One or more courses not found' 
+      });
+    }
+
+    // Check capacity for each course
+    const capacityErrors = [];
+    for (const course of courses) {
+      if (course.enrolledCount >= course.capacity) {
+        capacityErrors.push({
+          courseCode: course.courseCode,
+          courseName: course.courseName,
+          capacity: course.capacity,
+          enrolledCount: course.enrolledCount
+        });
+      }
+    }
+
+    if (capacityErrors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        status: 'error',
+        error: 'Validation Error',
+        message: 'Some courses are full',
+        capacityErrors
+      });
+    }
+
+    // Validate prerequisites for each course
+    const prerequisiteErrors = [];
+    for (const course of courses) {
+      if (course.prerequisites && course.prerequisites.length > 0) {
+        const validation = validatePrerequisites(user, course);
+        if (!validation.valid) {
+          prerequisiteErrors.push({
+            courseCode: course.courseCode,
+            courseName: course.courseName,
+            missingPrerequisites: validation.missing
+          });
+        }
+      }
+    }
+
+    // If there are prerequisite errors, return them
+    if (prerequisiteErrors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        status: 'error',
+        error: 'Validation Error',
+        message: 'Prerequisites not met for some courses',
+        prerequisiteErrors
       });
     }
 
@@ -67,6 +150,8 @@ const registerCourses = async (req, res, next) => {
     // Check if total exceeds 36 units
     if (totalCreditUnits > 36) {
       return res.status(400).json({ 
+        success: false,
+        status: 'error',
         error: 'Validation Error',
         message: 'Credit unit limit exceeded (Max: 36)',
         totalCreditUnits
@@ -80,12 +165,15 @@ const registerCourses = async (req, res, next) => {
       { new: true, runValidators: true }
     ).populate('registeredCourses');
 
-    if (!updatedUser) {
-      return res.status(404).json({ 
-        error: 'Not Found',
-        message: 'User not found' 
-      });
-    }
+    // Increment enrolledCount for each course
+    await Promise.all(
+      courses.map(course => 
+        Course.findByIdAndUpdate(
+          course._id,
+          { $inc: { enrolledCount: 1 } }
+        )
+      )
+    );
 
     // Return success response with updated user
     res.status(200).json({
@@ -142,8 +230,69 @@ const getRegisteredCourses = async (req, res, next) => {
   }
 };
 
+// Unregister from courses
+const unregisterCourses = async (req, res, next) => {
+  try {
+    const { courseIds, userId } = req.body;
+
+    if (!courseIds || !Array.isArray(courseIds) || courseIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        status: 'error',
+        error: 'Validation Error',
+        message: 'Course IDs are required'
+      });
+    }
+
+    // Fetch the user
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        status: 'error',
+        error: 'Not Found',
+        message: 'User not found' 
+      });
+    }
+
+    // Remove courses from user's registeredCourses
+    const updatedCourses = user.registeredCourses.filter(
+      courseId => !courseIds.includes(courseId.toString())
+    );
+
+    user.registeredCourses = updatedCourses;
+    await user.save();
+
+    // Decrement enrolledCount for each course
+    await Promise.all(
+      courseIds.map(courseId => 
+        Course.findByIdAndUpdate(
+          courseId,
+          { $inc: { enrolledCount: -1 } }
+        )
+      )
+    );
+
+    // Populate and return updated user
+    const populatedUser = await User.findById(userId).populate('registeredCourses');
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Courses unregistered successfully',
+      user: populatedUser
+    });
+
+  } catch (error) {
+    console.error('Error unregistering courses:', error);
+    next(error);
+  }
+};
+
 module.exports = {
   getAllCourses,
   registerCourses,
-  getRegisteredCourses
+  getRegisteredCourses,
+  unregisterCourses,
+  validatePrerequisites // Export for testing
 };

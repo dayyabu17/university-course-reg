@@ -4,6 +4,8 @@ const {
 	getAdminStats,
 	getAllCoursesAdmin,
 	createCourse,
+	getRegistrationPeriod,
+	updateRegistrationPeriod,
 } = require('../controllers/adminController');
 const { protect, isAdmin } = require('../middleware/authMiddleware');
 const { validateCourseCreation } = require('../middleware/validation');
@@ -21,5 +23,11 @@ router.get('/courses', protect, isAdmin, getAllCoursesAdmin);
 
 // POST /courses - Create a course (protected - admin only)
 router.post('/courses', protect, isAdmin, validateCourseCreation, createCourse);
+
+// GET /registration-period - Get registration period (protected - admin only)
+router.get('/registration-period', protect, isAdmin, getRegistrationPeriod);
+
+// PUT /registration-period - Update registration period (protected - admin only)
+router.put('/registration-period', protect, isAdmin, updateRegistrationPeriod);
 
 module.exports = router;

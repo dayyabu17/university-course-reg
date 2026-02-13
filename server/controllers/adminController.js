@@ -1,5 +1,6 @@
 const Course = require('../models/Course');
 const User = require('../models/User');
+const SystemConfig = require('../models/SystemConfig');
 
 // Get all student slips with their registered courses
 const getAllStudentSlips = async (req, res, next) => {
@@ -94,9 +95,72 @@ const createCourse = async (req, res, next) => {
   }
 };
 
+// Get registration period
+const getRegistrationPeriod = async (req, res, next) => {
+  try {
+    const config = await SystemConfig.findOne({ key: 'registrationPeriod' });
+
+    if (!config) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Registration period not configured'
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: config.value
+    });
+  } catch (error) {
+    console.error('Error fetching registration period:', error);
+    next(error);
+  }
+};
+
+// Update registration period
+const updateRegistrationPeriod = async (req, res, next) => {
+  try {
+    const { startDate, endDate } = req.body;
+
+    if (!startDate || !endDate) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Start date and end date are required'
+      });
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (start >= end) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'End date must be after start date'
+      });
+    }
+
+    const config = await SystemConfig.findOneAndUpdate(
+      { key: 'registrationPeriod' },
+      { value: { startDate: start, endDate: end } },
+      { new: true, upsert: true }
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Registration period updated successfully',
+      data: config.value
+    });
+  } catch (error) {
+    console.error('Error updating registration period:', error);
+    next(error);
+  }
+};
+
 module.exports = {
   getAllStudentSlips,
   getAdminStats,
   getAllCoursesAdmin,
   createCourse,
+  getRegistrationPeriod,
+  updateRegistrationPeriod,
 };
