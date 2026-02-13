@@ -31,7 +31,7 @@ describe('Property 1: Invalid Input Error Responses', () => {
             const hasAllFields = userData.name && userData.regNo && userData.email && 
                                 userData.password && userData.level;
             
-            if (hasAllFields) return true;
+            if (hasAllFields) {return true;}
 
             const response = await request(app)
               .post('/api/auth/signup')
@@ -86,7 +86,7 @@ describe('Property 1: Invalid Input Error Responses', () => {
           }),
           async (credentials) => {
             // Only test if at least one field is missing
-            if (credentials.email && credentials.password) return true;
+            if (credentials.email && credentials.password) {return true;}
 
             const response = await request(app)
               .post('/api/auth/login')
@@ -164,7 +164,7 @@ describe('Property 1: Invalid Input Error Responses', () => {
                                 courseData.creditUnit !== undefined && 
                                 courseData.level;
             
-            if (hasAllFields) return true;
+            if (hasAllFields) {return true;}
 
             const response = await request(app)
               .post('/api/admin/courses')
