@@ -76,6 +76,7 @@ Follow these instructions to set up the project locally.
 *   **Node.js** (v18 or higher)
 *   **npm** or **yarn**
 *   **MongoDB** (Local instance or Atlas URI)
+*   **Git** (for version control)
 
 ### Installation
 
@@ -85,47 +86,175 @@ git clone https://github.com/your-username/university-course-reg.git
 cd university-course-reg
 ```
 
-#### 2. Backend Setup
-Navigate to the server directory and install dependencies.
+#### 2. Install Dependencies (Root, Server, and Client)
 ```bash
+# Install root dependencies
+npm install
+
+# Install server dependencies
 cd server
 npm install
+cd ..
+
+# Install client dependencies
+cd client
+npm install
+cd ..
 ```
 
-Create a `.env` file in the `server/` root and configure the following:
+#### 3. Environment Configuration
+
+**Server Configuration:**
+Create a `.env` file in the `server/` directory:
 ```env
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/course_reg_db
 JWT_SECRET=your_super_secure_jwt_secret
 ```
 
-Start the server (with seeding optional):
-```bash
-# Seed the database (optional: clears data and adds defaults)
-npm run seed
-
-# Start development server
-npm run dev
-```
-
-#### 3. Frontend Setup
-Open a new terminal tab and navigate to the client directory.
-```bash
-cd client
-npm install
-```
-
-Start the React development server:
-```bash
-npm run dev
-```
-
-Create a `.env` file in `client/` or copy from `.env.example`:
+**Client Configuration:**
+Create a `.env` file in the `client/` directory:
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
 ```
 
-🚀 **The app should now be running at** `http://localhost:5173`
+#### 4. Database Setup (Optional)
+Seed the database with sample courses and test users:
+```bash
+cd server
+npm run seed        # Seed courses
+npm run seed:users  # Create test users
+cd ..
+```
+
+#### 5. Running the Application
+
+**Option A: Run Both Client and Server (from root directory)**
+```bash
+npm run dev
+```
+This will start both the backend server (port 5000) and frontend dev server (port 5173) concurrently.
+
+**Option B: Run Separately**
+
+Terminal 1 (Server):
+```bash
+cd server
+npm run dev
+```
+
+Terminal 2 (Client):
+```bash
+cd client
+npm run dev
+```
+
+🚀 **The app should now be running at:**
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:5000/api`
+
+---
+
+## 🔄 Git Workflow & Collaboration
+
+This project follows standard open-source development practices using Git and GitHub.
+
+### Branching Strategy
+
+- **`main`** - Production-ready code (protected branch)
+- **`feature/*`** - New features (e.g., `feature/course-search`)
+- **`bugfix/*`** - Bug fixes (e.g., `bugfix/login-error`)
+- **`hotfix/*`** - Urgent production fixes
+
+### Development Workflow
+
+1. **Create a feature branch:**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Make your changes and commit:**
+   ```bash
+   git add .
+   git commit -m "feat: add course search functionality"
+   ```
+
+3. **Push to your fork:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+4. **Create a Pull Request:**
+   - Go to the repository on GitHub
+   - Click "New Pull Request"
+   - Select your branch
+   - Fill in the PR template
+   - Request reviews from team members
+
+5. **Code Review:**
+   - At least one reviewer must approve
+   - Address any requested changes
+   - Ensure all CI checks pass
+
+6. **Merging:**
+   - **Only the course tutor can merge PRs to main**
+   - Direct commits to main are not allowed
+
+### Commit Message Conventions
+
+Follow conventional commit format:
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Types:**
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `refactor`: Code refactoring
+- `test`: Adding or updating tests
+- `chore`: Maintenance tasks
+
+**Examples:**
+```bash
+git commit -m "feat(auth): add JWT token refresh"
+git commit -m "fix(courses): resolve registration limit bug"
+git commit -m "docs(readme): update installation instructions"
+```
+
+---
+
+## 🔧 CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment.
+
+### Automated Checks
+
+Every push and pull request triggers:
+
+1. **Linting** - ESLint checks for code quality
+2. **Testing** - Jest (server) and Vitest (client) test suites
+3. **Build Verification** - Ensures production builds succeed
+4. **Coverage Reports** - Generates and displays test coverage
+
+### Workflow File
+
+The CI/CD pipeline is defined in `.github/workflows/ci.yml`
+
+### Coverage Requirements
+
+- **Server**: Minimum 60% coverage
+- **Client**: Minimum 50% coverage
+
+### Status Badge
+
+![CI Status](https://github.com/your-username/university-course-registration/workflows/CI/badge.svg)
 
 ---
 
@@ -174,17 +303,67 @@ Base URL: `http://localhost:5000/api` (configurable via `VITE_API_BASE_URL`)
 
 ---
 
-## 👥 Team Roles
+## 👥 Team Roles & Governance
 
-This project follows a collaborative open-source development model with the following roles:
+This project follows an open-source collaborative development model as per the course assignment requirements. Team members are organized according to the following governance structure:
 
-- **Project Lead**: Oversees project direction, roadmap, and major decisions
-- **Repository Manager**: Manages repository settings, branch protection, and access control
-- **Maintainers**: Review and merge pull requests, manage releases, and guide contributors
-- **Code Reviewers**: Review code submissions for quality, style, and correctness
-- **Contributors**: Submit bug fixes, features, and improvements via pull requests
+### Team Structure
 
-All contributors are expected to follow our [Code of Conduct](CONTRIBUTING.md#code-of-conduct) and [Contributing Guidelines](CONTRIBUTING.md).
+| Role | Responsibility | Selection Method |
+|------|---------------|------------------|
+| **Project Lead** | Overall coordination, project direction, and major decisions | Meritocratic Governance Model |
+| **Repository Manager** | Repository setup, permissions, branch protection rules | Consensus-based selection |
+| **Maintainers** | Issue triage, code quality oversight, release management | Appointed by team |
+| **Code Reviewers** | Review pull requests, ensure code quality and standards | All team members |
+| **Contributors** | Write code, documentation, and submit improvements | All team members |
+
+### Team Members
+
+> **Note**: Update this section with actual team member names and their assigned roles
+
+| Name | Registration Number | Role(s) | GitHub Username |
+|------|-------------------|---------|-----------------|
+| [Name] | UG15/CS/XXXX | Project Lead, Contributor | @username |
+| [Name] | UG15/CS/XXXX | Repository Manager, Code Reviewer | @username |
+| [Name] | UG15/CS/XXXX | Maintainer, Code Reviewer | @username |
+| [Name] | UG15/CS/XXXX | Code Reviewer, Contributor | @username |
+| [Name] | UG15/CS/XXXX | Contributor | @username |
+
+### Important Notes
+
+- **Code reviewers must be group members**
+- **Only the course tutor is permitted to merge pull requests into the main branch**
+- All team members are expected to follow the [Code of Conduct](CONTRIBUTING.md#code-of-conduct)
+- Balanced participation from all members is mandatory
+
+---
+
+## 🐛 Issue Tracking
+
+We use GitHub Issues to track bugs, feature requests, and tasks. Each group must create a minimum of 5 issues.
+
+### Creating Issues
+
+When creating an issue, please:
+
+1. Use the appropriate issue template (Bug Report or Feature Request)
+2. Provide a clear and descriptive title
+3. Include all relevant information
+4. Add appropriate labels
+5. Assign to team members when applicable
+
+### Issue Labels
+
+- `bug` - Something isn't working
+- `enhancement` - New feature or request
+- `documentation` - Documentation improvements
+- `good first issue` - Good for newcomers
+- `help wanted` - Extra attention needed
+- `testing` - Related to testing
+
+### Example Issues
+
+See [SAMPLE_ISSUES.md](SAMPLE_ISSUES.md) for examples of well-written issues.
 
 ---
 
