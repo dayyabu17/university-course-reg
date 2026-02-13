@@ -210,7 +210,6 @@ describe('Property 3: Error Status Code Mapping', () => {
       expect(response.status).toBe(404);
       expect(response.body.message).toBeDefined();
     });
-    });
 
     it('should return 404 for non-existent user ID', async () => {
       const course = await createTestCourse({ courseCode: 'CS700' });
