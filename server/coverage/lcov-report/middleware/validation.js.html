@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for controllers/authController.js</title>
+    <title>Code coverage report for middleware/validation.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">controllers</a> authController.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">middleware</a> validation.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">98.55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/30</span>
+                <span class='fraction'>68/69</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">98.98% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>98/99</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">98.55% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/30</span>
+                <span class='fraction'>68/69</span>
             </div>
         
             
@@ -179,237 +179,333 @@
 <a name='L114'></a><a href='#L114'>114</a>
 <a name='L115'></a><a href='#L115'>115</a>
 <a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">47x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">95x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">454x</span>
+<span class="cline-any cline-yes">454x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">483x</span>
+<span class="cline-any cline-yes">306x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">177x</span>
-<span class="cline-any cline-yes">177x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">177x</span>
-<span class="cline-any cline-yes">168x</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">90x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">148x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-yes">101x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">33x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">107x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">107x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">271x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">226x</span>
+<span class="cline-any cline-yes">226x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">226x</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-yes">174x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">146x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">226x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">226x</span>
+<span class="cline-any cline-yes">107x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">119x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Validation middleware for request bodies
 &nbsp;
-// Sign up a new user
-const signUp = async (req, res, next) =&gt; {
-  try {
-    const { name, regNo, email, password, level } = req.body;
+// Validate signup data
+const validateSignup = (req, res, next) =&gt; {
+  const { name, regNo, email, password, level } = req.body;
+  const errors = [];
 &nbsp;
-    // Check if user already exists
-    const existingUser = await User.findOne({ $or: [{ email }, { regNo }] });
-    if (existingUser) {
-      return res.status(400).json({
-        error: 'Validation Error',
-        message: existingUser.email === email
-          ? 'Email already registered'
-          : 'Registration number already exists'
-      });
-    }
-&nbsp;
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-&nbsp;
-    // Create new user
-    const newUser = await User.create({
-      name,
-      regNo,
-      email,
-      password: hashedPassword,
-      level
-    });
-&nbsp;
-    // Generate JWT token
-    const token = jwt.sign(
-      { id: newUser._id, role: newUser.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-&nbsp;
-    // Return success response (exclude password)
-    res.status(201).json({
-      status: 'success',
-      message: 'User registered successfully',
-      token,
-      user: {
-        id: newUser._id,
-        name: newUser.name,
-        regNo: newUser.regNo,
-        email: newUser.email,
-        level: newUser.level,
-        role: newUser.role
-      }
-    });
-&nbsp;
-  } catch (error) {
-    console.error('Sign up error:', error);
-    next(error); // Forward to error handler
+  // Check for missing or empty fields
+  if (!name || (typeof name === 'string' &amp;&amp; name.trim() === '')) {
+    errors.push('Name is required');
   }
-}
-&nbsp;
-// Sign in an existing user
-const signIn = async (req, res, next) =&gt; {
-  try {
-    const { email, password } = req.body;
-&nbsp;
-    // Find user by email
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({
-        error: 'Unauthorized',
-        message: 'Invalid email or password'
-      });
-    }
-&nbsp;
-    // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({
-        error: 'Unauthorized',
-        message: 'Invalid email or password'
-      });
-    }
-&nbsp;
-    // Generate JWT token with user ID and role
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-&nbsp;
-    // Return success response
-    res.status(200).json({
-      status: 'success',
-      message: 'Login successful',
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        regNo: user.regNo,
-        email: user.email,
-        level: user.level,
-        role: user.role
-      }
-    });
-&nbsp;
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error('Sign in error:', error);</span>
-<span class="cstat-no" title="statement not covered" >    next(error); </span>// Forward to error handler
+  if (!regNo || (typeof regNo === 'string' &amp;&amp; regNo.trim() === '')) {
+    errors.push('Registration number is required');
   }
+  if (!email || (typeof email === 'string' &amp;&amp; email.trim() === '')) {
+    errors.push('Email is required');
+  }
+  if (!password || (typeof password === 'string' &amp;&amp; password.trim() === '')) {
+    errors.push('Password is required');
+  }
+  if (!level) {
+    errors.push('Level is required');
+  }
+&nbsp;
+  // Validate level enum
+  if (level &amp;&amp; !['100', '200', '300', '400', '500'].includes(level)) {
+    errors.push('Invalid level. Must be one of: 100, 200, 300, 400, 500');
+  }
+&nbsp;
+  // Validate email format
+  if (email &amp;&amp; typeof email === 'string' &amp;&amp; email.trim() !== '') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errors.push('Invalid email format');
+    }
+  }
+&nbsp;
+  if (errors.length &gt; 0) {
+    return res.status(400).json({
+      error: 'Validation Error',
+      message: errors.join(', ')
+    });
+  }
+&nbsp;
+  next();
+};
+&nbsp;
+// Validate login data
+const validateLogin = (req, res, next) =&gt; {
+  const { email, password } = req.body;
+  const errors = [];
+&nbsp;
+  if (!email || (typeof email === 'string' &amp;&amp; email.trim() === '')) {
+    errors.push('Email is required');
+  }
+  if (!password || (typeof password === 'string' &amp;&amp; password.trim() === '')) {
+    errors.push('Password is required');
+  }
+&nbsp;
+  if (errors.length &gt; 0) {
+    return res.status(400).json({
+      error: 'Validation Error',
+      message: errors.join(', ')
+    });
+  }
+&nbsp;
+  next();
+};
+&nbsp;
+// Validate course creation data
+const validateCourseCreation = (req, res, next) =&gt; {
+  const { courseCode, courseName, semester, creditUnit, level } = req.body;
+  const errors = [];
+&nbsp;
+  if (!courseCode || (typeof courseCode === 'string' &amp;&amp; courseCode.trim() === '')) {
+    errors.push('Course code is required');
+  }
+  if (!courseName || (typeof courseName === 'string' &amp;&amp; courseName.trim() === '')) {
+    errors.push('Course name is required');
+  }
+  if (semester === undefined || semester === null) {
+    errors.push('Semester is required');
+  }
+  if (creditUnit === undefined || creditUnit === null) {
+    errors.push('Credit unit is required');
+  }
+  if (level === undefined || level === null) {
+    errors.push('Level is required');
+  }
+&nbsp;
+  // Validate semester enum
+  if (semester !== undefined &amp;&amp; semester !== null &amp;&amp; ![1, 2].includes(semester)) {
+    errors.push('Invalid semester. Must be 1 or 2');
+  }
+&nbsp;
+  // Validate creditUnit enum
+  if (creditUnit !== undefined &amp;&amp; creditUnit !== null &amp;&amp; ![2, 3].includes(creditUnit)) {
+    errors.push('Invalid credit unit. Must be 2 or 3');
+  }
+&nbsp;
+  // Validate level enum
+  if (level !== undefined &amp;&amp; level !== null &amp;&amp; ![100, 200, 300, 400, 500].includes(level)) {
+    errors.push('Invalid level. Must be one of: 100, 200, 300, 400, 500');
+  }
+&nbsp;
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (errors.length &gt; 0) {
+    return res.status(400).json({
+      error: 'Validation Error',
+      message: errors.join(', ')
+    });
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  next();</span>
+};
+&nbsp;
+// Validate course registration data
+const validateCourseRegistration = (req, res, next) =&gt; {
+  const { courseIds, userId } = req.body;
+  const errors = [];
+&nbsp;
+  if (!courseIds) {
+    errors.push('Course IDs are required');
+  } else if (!Array.isArray(courseIds)) {
+    errors.push('Course IDs must be an array');
+  } else if (courseIds.length === 0) {
+    errors.push('At least one course ID is required');
+  }
+&nbsp;
+  if (!userId || (typeof userId === 'string' &amp;&amp; userId.trim() === '')) {
+    errors.push('User ID is required');
+  }
+&nbsp;
+  if (errors.length &gt; 0) {
+    return res.status(400).json({
+      error: 'Validation Error',
+      message: errors.join(', ')
+    });
+  }
+&nbsp;
+  next();
 };
 &nbsp;
 module.exports = {
-  signUp,
-  signIn
+  validateSignup,
+  validateLogin,
+  validateCourseCreation,
+  validateCourseRegistration
 };
 &nbsp;</pre></td></tr></table></pre>
 
