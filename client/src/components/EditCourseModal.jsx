@@ -68,6 +68,7 @@ function EditCourseModal({ course, onClose, onUpdate }) {
           <div className="grid gap-4 md:grid-cols-2">
             <FieldInput
               label="Course Code"
+              placeholder="e.g. CSC101"
               name="courseCode"
               type="text"
               value={formData.courseCode}
@@ -76,6 +77,7 @@ function EditCourseModal({ course, onClose, onUpdate }) {
             />
             <FieldInput
               label="Course Title"
+              placeholder="e.g. Introduction to Computer Science"
               name="courseName"
               type="text"
               value={formData.courseName}
@@ -139,6 +141,7 @@ function EditCourseModal({ course, onClose, onUpdate }) {
 
           <FieldInput
             label="Capacity"
+            placeholder="e.g. 50"
             name="capacity"
             type="number"
             value={formData.capacity}
