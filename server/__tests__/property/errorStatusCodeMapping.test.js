@@ -72,16 +72,24 @@ describe('Property 3: Error Status Code Mapping', () => {
     });
 
     it('should return 400 for credit limit exceeded', async () => {
-      // Create courses that exceed 36 units
+      // Create courses that exceed 36 units (13 courses × 3 units = 39 units)
       const courses = await Promise.all(
         Array.from({ length: 13 }, (_, i) => 
           createTestCourse({ 
             courseCode: `CS${600 + i}`, 
+            courseName: `Test Course ${600 + i}`,
             creditUnit: 3,
-            level: '100'
+            level: '100',
+            semester: 1,
+            isActive: true,
+            isArchived: false
           })
         )
       );
+
+      // Verify courses were created
+      expect(courses).toHaveLength(13);
+      expect(courses.every(c => c._id)).toBe(true);
 
       const response = await request(app)
         .post('/api/courses/register')
