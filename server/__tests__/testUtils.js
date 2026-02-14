@@ -18,7 +18,8 @@ function generateToken(userId, role = 'student') {
  * Create a test student user
  */
 async function createTestStudent(overrides = {}) {
-  const hashedPassword = await bcrypt.hash('password123', 10);
+  // Use bcrypt rounds of 1 for tests (much faster than default 10)
+  const hashedPassword = await bcrypt.hash('password123', 1);
   
   const studentData = {
     name: 'Test Student',
@@ -41,7 +42,8 @@ async function createTestStudent(overrides = {}) {
  * Create a test admin user
  */
 async function createTestAdmin(overrides = {}) {
-  const hashedPassword = await bcrypt.hash('admin123', 10);
+  // Use bcrypt rounds of 1 for tests (much faster than default 10)
+  const hashedPassword = await bcrypt.hash('admin123', 1);
   
   const adminData = {
     name: 'Test Admin',

@@ -94,36 +94,36 @@ describe('Property 4: Database Error Resilience', () => {
     });
 
     it('should handle duplicate key errors gracefully', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.string({ minLength: 5, maxLength: 20 }),
-          async (randomString) => {
-            const userData = {
-              name: 'Test User',
-              regNo: `UG15/CS/${randomString}`,
-              email: `${randomString}@test.com`,
-              password: 'password123',
-              level: '100'
-            };
+      // Use a simpler approach without property-based testing for bcrypt-heavy operations
+      const testCases = [
+        { regNo: 'DUP001', email: 'dup1@test.com' },
+        { regNo: 'DUP002', email: 'dup2@test.com' },
+        { regNo: 'DUP003', email: 'dup3@test.com' }
+      ];
 
-            // Create user first time
-            await request(app)
-              .post('/api/auth/signup')
-              .send(userData);
+      for (const testCase of testCases) {
+        const userData = {
+          name: 'Test User',
+          regNo: testCase.regNo,
+          email: testCase.email,
+          password: 'password123',
+          level: '100'
+        };
 
-            // Try to create duplicate
-            const response = await request(app)
-              .post('/api/auth/signup')
-              .send(userData);
+        // Create user first time
+        await request(app)
+          .post('/api/auth/signup')
+          .send(userData);
 
-            // Should handle duplicate error gracefully
-            expect(response.status).toBe(400);
-            expect(response.body.message).toBeDefined();
-            return true;
-          }
-        ),
-        { numRuns: 5 }
-      );
+        // Try to create duplicate
+        const response = await request(app)
+          .post('/api/auth/signup')
+          .send(userData);
+
+        // Should handle duplicate error gracefully
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBeDefined();
+      }
     }, 30000);
 
     it('should handle validation errors without crashing', async () => {

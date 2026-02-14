@@ -54,6 +54,7 @@ describe('Authentication Endpoints', () => {
       const user = await User.findOne({ email: userData.email });
       expect(user.password).not.toBe(userData.password);
       
+      // Password should be hashed (bcrypt uses rounds=1 in tests for speed)
       const isPasswordValid = await bcrypt.compare(userData.password, user.password);
       expect(isPasswordValid).toBe(true);
     });
@@ -240,10 +241,13 @@ describe('Authentication Endpoints', () => {
   });
 
   describe('POST /api/auth/login', () => {
-    beforeEach(async () => {
-      // Create a test user for login tests
-      const hashedPassword = await bcrypt.hash('password123', 10);
-      await User.create({
+    let testUser;
+
+    beforeAll(async () => {
+      // Create test user ONCE for all login tests (not before each)
+      // Use bcrypt rounds of 1 for tests (much faster)
+      const hashedPassword = await bcrypt.hash('password123', 1);
+      testUser = await User.create({
         name: 'Login Test User',
         regNo: 'UG15/CS/4001',
         email: 'logintest@test.com',
@@ -370,7 +374,8 @@ describe('Authentication Endpoints', () => {
     });
 
     it('should login admin user successfully', async () => {
-      const hashedPassword = await bcrypt.hash('adminpass', 10);
+      // Use bcrypt rounds of 1 for tests (much faster)
+      const hashedPassword = await bcrypt.hash('adminpass', 1);
       await User.create({
         name: 'Admin User',
         regNo: 'ADMIN001',
