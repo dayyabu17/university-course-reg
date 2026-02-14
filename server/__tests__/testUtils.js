@@ -26,7 +26,7 @@ async function createTestStudent(overrides = {}) {
     regNo: 'UG15/CS/1001',
     email: 'student@test.com',
     password: hashedPassword,
-    level: 100,
+    level: '100', // Changed from 100 to '100' to match User model
     role: 'student',
     registeredCourses: [],
     ...overrides
@@ -50,7 +50,7 @@ async function createTestAdmin(overrides = {}) {
     regNo: 'ADMIN001',
     email: 'admin@test.com',
     password: hashedPassword,
-    level: 100,
+    level: '100', // Changed from 100 to '100' to match User model
     role: 'admin',
     registeredCourses: [],
     ...overrides
