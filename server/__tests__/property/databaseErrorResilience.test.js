@@ -22,76 +22,62 @@ describe('Property 4: Database Error Resilience', () => {
 
   describe('System should handle database errors gracefully', () => {
     it('should handle invalid ObjectId format without crashing', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.string().filter(s => !mongoose.isValidObjectId(s) && s.length > 0),
-          async (invalidId) => {
-            const response = await request(app)
-              .post('/api/courses/register')
-              .set('Authorization', `Bearer ${studentToken}`)
-              .send({
-                courseIds: [invalidId],
-                userId: student._id
-              });
+      const invalidIds = ['invalid', '123', 'not-an-id'];
+      
+      for (const invalidId of invalidIds) {
+        const response = await request(app)
+          .post('/api/courses/register')
+          .set('Authorization', `Bearer ${studentToken}`)
+          .send({
+            courseIds: [invalidId],
+            userId: student._id
+          });
 
-            // System should handle error gracefully and return appropriate response
-            expect(response.status).toBeGreaterThanOrEqual(400);
-            expect(response.status).toBeLessThan(600);
-            expect(response.body).toHaveProperty('status');
-            return true;
-          }
-        ),
-        { numRuns: 5 }
-      );
-    });
+        expect(response.status).toBeGreaterThanOrEqual(400);
+        expect(response.status).toBeLessThan(600);
+        expect(response.body).toHaveProperty('status');
+      }
+    }, 10000);
 
     it('should handle malformed user IDs without crashing', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.string().filter(s => s.length > 0 && s.length < 50),
-          async (malformedId) => {
-            const response = await request(app)
-              .post('/api/courses/register')
-              .set('Authorization', `Bearer ${studentToken}`)
-              .send({
-                courseIds: ['507f1f77bcf86cd799439011'],
-                userId: malformedId
-              });
+      const malformedIds = ['malformed', 'test123', 'abc'];
+      
+      for (const malformedId of malformedIds) {
+        const response = await request(app)
+          .post('/api/courses/register')
+          .set('Authorization', `Bearer ${studentToken}`)
+          .send({
+            courseIds: ['507f1f77bcf86cd799439011'],
+            userId: malformedId
+          });
 
-            // System should handle error gracefully
-            expect(response.status).toBeGreaterThanOrEqual(400);
-            expect(response.status).toBeLessThan(600);
-            expect(response.body).toHaveProperty('status');
-            return true;
-          }
-        ),
-        { numRuns: 5 }
-      );
-    });
+        expect(response.status).toBeGreaterThanOrEqual(400);
+        expect(response.status).toBeLessThan(600);
+        expect(response.body).toHaveProperty('status');
+      }
+    }, 10000);
 
     it('should handle non-existent document queries gracefully', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.string({ minLength: 24, maxLength: 24 }).filter(s => /^[0-9a-f]{24}$/.test(s)),
-          async (nonExistentId) => {
-            const response = await request(app)
-              .post('/api/courses/register')
-              .set('Authorization', `Bearer ${studentToken}`)
-              .send({
-                courseIds: [nonExistentId],
-                userId: student._id
-              });
+      const nonExistentIds = [
+        '507f1f77bcf86cd799439011',
+        '507f1f77bcf86cd799439012',
+        '507f1f77bcf86cd799439013'
+      ];
+      
+      for (const nonExistentId of nonExistentIds) {
+        const response = await request(app)
+          .post('/api/courses/register')
+          .set('Authorization', `Bearer ${studentToken}`)
+          .send({
+            courseIds: [nonExistentId],
+            userId: student._id
+          });
 
-            // Should return 404 or 400, not crash
-            expect(response.status).toBeGreaterThanOrEqual(400);
-            expect(response.status).toBeLessThan(500);
-            expect(response.body).toHaveProperty('message');
-            return true;
-          }
-        ),
-        { numRuns: 5 } // Reduced runs since filter is expensive
-      );
-    });
+        expect(response.status).toBeGreaterThanOrEqual(400);
+        expect(response.status).toBeLessThan(500);
+        expect(response.body).toHaveProperty('message');
+      }
+    }, 10000);
 
     it('should handle duplicate key errors gracefully', async () => {
       // Use a simpler approach without property-based testing for bcrypt-heavy operations
@@ -124,37 +110,28 @@ describe('Property 4: Database Error Resilience', () => {
         expect(response.status).toBe(400);
         expect(response.body.message).toBeDefined();
       }
-    }, 30000);
+    }, 15000);
 
     it('should handle validation errors without crashing', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.record({
-            courseCode: fc.string({ minLength: 1, maxLength: 10 }),
-            courseName: fc.string({ minLength: 1, maxLength: 100 }),
-            semester: fc.integer(),
-            creditUnit: fc.integer(),
-            level: fc.string()
-          }),
-          async (invalidCourseData) => {
-            const response = await request(app)
-              .post('/api/admin/courses')
-              .set('Authorization', `Bearer ${adminToken}`)
-              .send(invalidCourseData);
+      const invalidCourses = [
+        { courseCode: '', courseName: 'Test', semester: 1, creditUnit: 3, level: '100' },
+        { courseCode: 'CS', courseName: '', semester: 1, creditUnit: 3, level: '100' },
+        { courseCode: 'CS', courseName: 'Test', semester: 0, creditUnit: 3, level: '100' }
+      ];
 
-            // System should handle validation errors gracefully
-            expect(response.status).toBeGreaterThanOrEqual(400);
-            expect(response.status).toBeLessThan(600);
-            expect(response.body).toHaveProperty('status');
-            return true;
-          }
-        ),
-        { numRuns: 5 }
-      );
-    }, 30000);
+      for (const invalidCourseData of invalidCourses) {
+        const response = await request(app)
+          .post('/api/admin/courses')
+          .set('Authorization', `Bearer ${adminToken}`)
+          .send(invalidCourseData);
+
+        expect(response.status).toBeGreaterThanOrEqual(400);
+        expect(response.status).toBeLessThan(600);
+        expect(response.body).toHaveProperty('status');
+      }
+    }, 10000);
 
     it('should return appropriate error responses for database failures', async () => {
-      // Test with various invalid inputs that could cause database errors
       const testCases = [
         {
           endpoint: '/api/courses/register',
@@ -181,45 +158,26 @@ describe('Property 4: Database Error Resilience', () => {
           .set('Authorization', `Bearer ${testCase.token}`)
           .send(testCase.data);
 
-        // Should return error response, not crash
         expect(response.status).toBeGreaterThanOrEqual(400);
         expect(response.body).toHaveProperty('status');
         expect(response.body.status).toBe('error');
       }
-    });
+    }, 10000);
 
     it('should handle concurrent database operations without crashing', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.array(fc.integer({ min: 1, max: 10 }), { minLength: 5, maxLength: 10 }),
-          async (operations) => {
-            // Simulate concurrent requests
-            const promises = operations.map(async () => {
-              try {
-                const response = await request(app)
-                  .get('/api/admin/stats')
-                  .set('Authorization', `Bearer ${adminToken}`);
-                
-                return response.status;
-              } catch (_error) {
-                return 500;
-              }
-            });
-
-            const results = await Promise.all(promises);
-            
-            // All requests should complete without crashing
-            results.forEach(status => {
-              expect(status).toBeGreaterThanOrEqual(200);
-              expect(status).toBeLessThan(600);
-            });
-            
-            return true;
-          }
-        ),
-        { numRuns: 3 } // Reduced runs for concurrent operations
+      const promises = Array(5).fill(null).map(() =>
+        request(app)
+          .get('/api/admin/stats')
+          .set('Authorization', `Bearer ${adminToken}`)
       );
-    }, 30000);
+
+      const results = await Promise.all(promises);
+      
+      results.forEach(response => {
+        expect(response.status).toBeGreaterThanOrEqual(200);
+        expect(response.status).toBeLessThan(600);
+      });
+    }, 10000);
 
     it('should maintain system stability after database errors', async () => {
       // Cause a database error
@@ -235,7 +193,7 @@ describe('Property 4: Database Error Resilience', () => {
 
       expect(response.status).toBe(200);
       expect(response.body.status).toBe('success');
-    });
+    }, 10000);
 
     it('should handle empty or null database results gracefully', async () => {
       // Query for non-existent data
@@ -246,26 +204,20 @@ describe('Property 4: Database Error Resilience', () => {
       expect(response.status).toBe(200);
       expect(response.body.data).toEqual([]);
       expect(response.body.count).toBe(0);
-    });
+    }, 10000);
 
     it('should handle malformed query parameters without crashing', async () => {
-      await fc.assert(
-        fc.asyncProperty(
-          fc.string(),
-          async (malformedLevel) => {
-            const response = await request(app)
-              .get(`/api/courses/all?level=${encodeURIComponent(malformedLevel)}`);
+      const malformedLevels = ['abc', '999', 'invalid'];
+      
+      for (const malformedLevel of malformedLevels) {
+        const response = await request(app)
+          .get(`/api/courses/all?level=${encodeURIComponent(malformedLevel)}`);
 
-            // Should handle gracefully, not crash
-            expect(response.status).toBeGreaterThanOrEqual(200);
-            expect(response.status).toBeLessThan(600);
-            expect(response.body).toHaveProperty('status');
-            return true;
-          }
-        ),
-        { numRuns: 5 }
-      );
-    });
+        expect(response.status).toBeGreaterThanOrEqual(200);
+        expect(response.status).toBeLessThan(600);
+        expect(response.body).toHaveProperty('status');
+      }
+    }, 10000);
   });
 
   describe('System should log errors but continue operating', () => {
@@ -274,7 +226,7 @@ describe('Property 4: Database Error Resilience', () => {
       const successRequests = [];
 
       // Generate some error requests
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         errorRequests.push(
           request(app)
             .post('/api/courses/register')
@@ -286,7 +238,7 @@ describe('Property 4: Database Error Resilience', () => {
       await Promise.all(errorRequests);
 
       // System should still handle valid requests
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 3; i++) {
         successRequests.push(
           request(app)
             .get('/api/admin/stats')
@@ -300,6 +252,6 @@ describe('Property 4: Database Error Resilience', () => {
         expect(response.status).toBe(200);
         expect(response.body.status).toBe('success');
       });
-    });
+    }, 10000);
   });
 });

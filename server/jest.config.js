@@ -19,8 +19,9 @@ module.exports = {
   },
   testMatch: ['**/__tests__/**/*.test.js'],
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.js'],
-  testTimeout: 60000, // Increased to 60 seconds for property-based tests
+  testTimeout: 30000, // 30 seconds per test
   verbose: true,
   forceExit: true,
-  detectOpenHandles: true
+  detectOpenHandles: true,
+  maxWorkers: 1 // Run tests serially to avoid database conflicts
 };
