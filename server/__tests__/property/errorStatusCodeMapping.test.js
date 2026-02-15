@@ -7,15 +7,18 @@ const { createTestStudent, createTestAdmin, createTestCourse } = require('../tes
 const app = createTestApp();
 
 describe('Property 3: Error Status Code Mapping', () => {
-  let student, studentToken, adminToken;
+  let student, studentToken, admin, adminToken;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     process.env.JWT_SECRET = 'test_jwt_secret';
+    
+    // Create student and admin before each test (since afterEach clears DB)
     const studentResult = await createTestStudent();
     student = studentResult.student;
     studentToken = studentResult.token;
 
     const adminResult = await createTestAdmin();
+    admin = adminResult.admin;
     adminToken = adminResult.token;
   });
 
@@ -72,24 +75,29 @@ describe('Property 3: Error Status Code Mapping', () => {
     });
 
     it('should return 400 for credit limit exceeded', async () => {
-      // Create courses that exceed 36 units
-      const courses = await Promise.all(
-        Array.from({ length: 13 }, (_, i) => 
-          createTestCourse({ 
-            courseCode: `CS${600 + i}`, 
-            creditUnit: 3,
-            level: '100'
-          })
-        )
-      );
+      // Create courses that exceed 36 units (same pattern as integration test)
+      const manyCourses = await Promise.all([
+        createTestCourse({ courseCode: 'CRED601', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED602', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED603', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED604', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED605', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED606', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED607', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED608', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED609', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED610', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED611', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED612', creditUnit: 3 }),
+        createTestCourse({ courseCode: 'CRED613', creditUnit: 3 }) // Total: 39 units
+      ]);
+
+      const courseIds = manyCourses.map(c => c._id);
 
       const response = await request(app)
         .post('/api/courses/register')
         .set('Authorization', `Bearer ${studentToken}`)
-        .send({ 
-          courseIds: courses.map(c => c._id.toString()),
-          userId: student._id.toString()
-        });
+        .send({ courseIds, userId: student._id });
 
       expect(response.status).toBe(400);
       expect(response.body.message).toContain('Credit unit limit exceeded');
